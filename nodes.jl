@@ -4,7 +4,10 @@ abstract type CT_Node end
 abstract type StateInput <: CT_Node end
 mutable struct Pump <: StateInput
     output::Function
-    Pump(output) = new(output)
+    p
+    function Pump(output; p=1)
+        new(output, p)
+    end
 end
  
 
@@ -32,12 +35,12 @@ mutable struct StateModel <: StateProcess
             x = u * self.A
             B = transpose(self.A)
 
+            self.model(dx,x,p,t)
+
             for i in 1:size(self.inputs)[1]
-                out = self.inputs.output(t)
+                out = self.inputs[i].output(self.inputs[i], t)
                 dx = dx + out
             end
-
-            self.model(dx,x,p,t)
 
             u .= x*B - (u*self.A)*B + u
             du .= dx*B - (du*self.A)*B + du

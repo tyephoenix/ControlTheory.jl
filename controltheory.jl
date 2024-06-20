@@ -1,10 +1,8 @@
 module ControlTheory
     include("nodes.jl")
-    # include("controllers.jl")
     include("observers.jl")
+    include("controllers.jl")
     # include("processes.jl")
-
-    export ControlSystem
 
     export Pump
     export MeasurementSensor
@@ -12,9 +10,5 @@ module ControlTheory
 
     export LuenbergerObserver
 
-    struct ControlSystem
-        initialState::Matrix{Float64}
-
-        ControlSystem(initialState) = new(initialState)
-    end
+    export ModelPredictiveController
 end;
