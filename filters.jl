@@ -11,6 +11,7 @@ mutable struct ExponentialFilter <: StateFilter
     τ::Float64
 
     system::Function
+    model::Function
 
     function system(self::ExponentialFilter)
         function system0(du, u, p, t)
@@ -35,6 +36,7 @@ mutable struct ExponentialFilter <: StateFilter
             system(self)
         end
         self.system = system0
+        self.model = parent.model
         return self
     end
 end
