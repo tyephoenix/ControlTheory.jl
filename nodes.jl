@@ -78,7 +78,7 @@ mutable struct MeasurementSensor <: StateSensor
     function system(self::MeasurementSensor)
         function system0(du,u,p,t)
             self.parent.system()(du,u,p,t)
-            return self.measurement(u)
+            return self.measurement((u * parent.A))
         end
         return system0
     end
