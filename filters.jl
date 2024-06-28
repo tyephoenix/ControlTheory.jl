@@ -23,7 +23,7 @@ mutable struct ExponentialFilter <: StateFilter
             dx = du * self.parent.A
             x = u * self.parent.A
             α = exp((-self.T)/self.τ)
-            y .=  α*y + (1-α)*x
+            dy .=  α*dy + (1-α)*dx
 
             u .= y*B - (u*self.A)*B + u
             du .= dy*B - (du*self.A)*B + du

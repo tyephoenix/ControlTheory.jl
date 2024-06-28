@@ -50,7 +50,7 @@ L = [0.023 0.0; 0.53 0.026; 0.44 0.50]
 luenberger = LuenbergerObserver([0.0;0.0;1.0;;],[sensor], reaction)
 
 # Optimization
-package = optimize(luenberger, tSpan, [0.0;0.0;0.0;;], 20, maxtime=10)
+package = optimize(luenberger, tSpan, [0.0;0.0;0.0;;], 10, maxtime=30)
 solve(ODEProblem(package[1], [Ca_0; Cb_0; Cc_0], tSpan), callback=package[2], tstops=package[3])
 
 # Controller

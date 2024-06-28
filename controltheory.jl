@@ -70,7 +70,7 @@ module ControlTheory
                 end
                 function opt(x, p)
                     tF = reshape(x, (size(tv)[1], size(ym)[1]))
-                    optProblem = ODEProblem(optFunction, u0, (preTimeIndex,timeIndex))
+                    optProblem = ODEProblem(optFunction, u0, (0,timeIndex))
                     eSol = solve(optProblem, Tsit5(), p=[tF, ym], verbose=false)
                     ev = eSol(timeIndex)
                     err = (tv-ev)/tv
@@ -103,7 +103,7 @@ module ControlTheory
                     itw = (tw/s[2]) + (tw/(s[1]))
                     v = ((tw/s[2])/itw)*pF[1] + ((tw/(s[1]))/itw)*(nF)
                     pF[1] = v
-                    acc = ((tw/s[2])/itw)*pF[2] + ((tw/(s[1]))/itw)*(s[1])
+                    acc = (intregrator.t/tSpan[2])*pF[2] + (interval/tSpan[2])*(s[1])
                     pF[2] = acc
                 end
                 println("Optimization: Discrete Event at $(timeIndex). Elapsed time = $(time() - ti).")

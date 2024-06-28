@@ -18,16 +18,7 @@ mutable struct StateModel <: StateProcess
     A::Matrix{Float64}
     model::Function
 
-    state::Function
     system::Function
-
-    function state(self::StateModel, u0, t)
-        system = self.system(self)
-
-        problem = ODEProblem(system, u0, (0,t))
-        solution = solve(problem, Tsit5(), saveat=t)
-        return solution(t)
-    end
 
     function system(self::StateModel)
         function system0(du,u,p,t)
@@ -50,10 +41,6 @@ mutable struct StateModel <: StateProcess
 
     function StateModel(A, model; inputs=StateInput[])
         self = new(inputs, A, model)
-        function state0(u0, t)
-            state(self, u0, t)
-        end
-        self.state = state0
         function system0()
             system(self)
         end
